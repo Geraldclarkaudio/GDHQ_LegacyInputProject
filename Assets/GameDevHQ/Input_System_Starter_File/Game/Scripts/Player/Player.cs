@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Game.Scripts.LiveObjects;
 using Cinemachine;
+using UnityEngine.InputSystem;
 
 namespace Game.Scripts.Player
 {
@@ -22,6 +23,7 @@ namespace Game.Scripts.Player
         [SerializeField]
         private GameObject _model;
 
+        private GameInput _input;
 
         private void OnEnable()
         {
@@ -37,6 +39,9 @@ namespace Game.Scripts.Player
 
         private void Start()
         {
+            _input = new GameInput();
+            _input.Player.Enable();
+
             _controller = GetComponent<CharacterController>();
 
             if (_controller == null)
@@ -58,15 +63,11 @@ namespace Game.Scripts.Player
         private void CalcutateMovement()
         {
             _playerGrounded = _controller.isGrounded;
-            float h = Input.GetAxisRaw("Horizontal");
-            float v = Input.GetAxisRaw("Vertical");
-
-            transform.Rotate(transform.up, h);
-
-            var direction = transform.forward * v;
+            var move = _input.Player.Movement.ReadValue<Vector2>();
+            var direction = transform.forward * move.y;
             var velocity = direction * _speed;
-
-
+            transform.Rotate(transform.up, move.x);
+         
             _anim.SetFloat("Speed", Mathf.Abs(velocity.magnitude));
 
 
@@ -76,9 +77,7 @@ namespace Game.Scripts.Player
             {
                 velocity.y += -20f * Time.deltaTime;
             }
-            
-            _controller.Move(velocity * Time.deltaTime);                      
-
+            _controller.Move(velocity * Time.deltaTime);                   
         }
 
         private void InteractableZone_onZoneInteractionComplete(InteractableZone zone)
