@@ -29,6 +29,7 @@ namespace Game.Scripts.Player
         public bool interacted;
         public bool _interactPress;
         public bool _interactHold;
+        public bool _holdStop;
 
         private void OnEnable()
         {
@@ -46,12 +47,13 @@ namespace Game.Scripts.Player
         {
             _input = new GameInput();
             _input.Player.Enable(); // enable Player Input Map on start
-           
+            _input.Player.Interact.canceled += Interact_canceled;
             _input.Player.Interact.performed +=
                 ctx =>
                 {
                     if (ctx.interaction is UnityEngine.InputSystem.Interactions.HoldInteraction)
                     {
+                        _holdStop = false;
                         Debug.Log("HOLDING");
                         if(interactableZone != null)
                         {
@@ -78,7 +80,6 @@ namespace Game.Scripts.Player
                     }
                 };
 
-
             _controller = GetComponent<CharacterController>();
 
             if (_controller == null)
@@ -88,6 +89,11 @@ namespace Game.Scripts.Player
 
             if (_anim == null)
                 Debug.Log("Failed to connect the Animator");
+        }
+
+        private void Interact_canceled(InputAction.CallbackContext context)
+        {
+            _holdStop = true;
         }
 
         private void Update()

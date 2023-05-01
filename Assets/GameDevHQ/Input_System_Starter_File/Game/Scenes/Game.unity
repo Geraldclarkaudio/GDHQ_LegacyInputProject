@@ -995,6 +995,10 @@ PrefabInstance:
       value: Wooden Pallet
       objectReference: {fileID: 0}
     - target: {fileID: -927199367670048503, guid: 9d76b14ce284b4364bd7dfb5511ef560, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: 9d76b14ce284b4364bd7dfb5511ef560, type: 3}
       propertyPath: m_TagString
       value: Liftable
       objectReference: {fileID: 0}
@@ -2010,6 +2014,7 @@ MonoBehaviour:
   - {fileID: 547960046}
   _crateCollider: {fileID: 147778362}
   _interactableZone: {fileID: 197238855}
+  canShatter: 0
 --- !u!65 &147778362
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -5300,6 +5305,7 @@ MonoBehaviour:
   interacted: 0
   _interactPress: 0
   _interactHold: 0
+  _holdStop: 0
 --- !u!4 &359860634
 Transform:
   m_ObjectHideFlags: 0
@@ -11462,7 +11468,7 @@ Light:
   m_BounceIntensity: 1
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 7.7159966e+31, y: 9.5961304e+11, z: 7.6813502e+31, w: 14300.599}
+  m_BoundingSphereOverride: {x: 1.02e-43, y: 0, z: 0, w: -3.1261653e-18}
   m_UseBoundingSphereOverride: 0
   m_UseViewFrustumForShadowCasterCull: 1
   m_ShadowRadius: 0
@@ -15999,7 +16005,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 972744894}
   m_LocalRotation: {x: 0.22150686, y: 0.0467053, z: -0.010621907, w: 0.9739818}
-  m_LocalPosition: {x: -0.48177326, y: 4.5286655, z: -4.833789}
+  m_LocalPosition: {x: -0.48177248, y: 4.5286655, z: -4.833789}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -31411,7 +31417,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: c14085171003ee2478ef40ebd5fcbee8, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 7.036
+      value: 7.13
       objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: c14085171003ee2478ef40ebd5fcbee8, type: 3}
       propertyPath: m_LocalPosition.y

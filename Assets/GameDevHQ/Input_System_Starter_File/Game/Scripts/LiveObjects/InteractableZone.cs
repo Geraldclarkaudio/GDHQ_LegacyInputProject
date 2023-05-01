@@ -226,9 +226,20 @@ namespace Game.Scripts.LiveObjects
                             {
                                 player._interactPress = false;
                                 player._interactHold = false;
+                                PerformHoldAction();
                             }
                             break;
                     }
+                }
+                if(player._holdStop == true)
+                {
+                    switch(_zoneType)
+                    {
+                        case ZoneType.Action:
+                            PerformHoldCancelAction();
+                            break;
+                    }
+
                 }
             }
         }
@@ -264,6 +275,12 @@ namespace Game.Scripts.LiveObjects
         {
             UIManager.Instance.DisplayInteractableZoneMessage(false);
             onHoldStarted?.Invoke(_zoneID);
+            player._holdStop = false;
+        }
+        private void PerformHoldCancelAction()
+        {
+            onHoldEnded?.Invoke(_zoneID);
+            player._holdStop = false;
         }
 
         public GameObject[] GetItems()

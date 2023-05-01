@@ -20,7 +20,7 @@
                     "id": "a2bc38fc-62de-4400-8ad6-5acaf1ebf63c",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": "Hold(duration=2),Press",
+                    "interactions": "Hold(duration=1),Press",
                     "initialStateCheck": false
                 }
             ],
@@ -72,6 +72,61 @@
                 {
                     "name": "right",
                     "id": "7f2160fe-4e40-489a-aa7f-03810af8b266",
+                    "path": "<Keyboard>/d",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Movement",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "GamePad",
+                    "id": "ea6fa47d-61b1-4b4d-8a2c-adbe5ceaf14c",
+                    "path": "2DVector",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Movement",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "up",
+                    "id": "bf9b5cfc-1a9c-40a1-9f0c-7b1f7734605a",
+                    "path": "<Keyboard>/w",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Movement",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "down",
+                    "id": "d220231e-6504-4bf9-a84b-52cee0658d00",
+                    "path": "<Keyboard>/s",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Movement",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "left",
+                    "id": "9dde2517-374f-4733-a11d-c85d6c4edad6",
+                    "path": "<Keyboard>/a",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Movement",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "right",
+                    "id": "83b904d7-c03f-4a88-a5f6-af7fe5de1231",
                     "path": "<Keyboard>/d",
                     "interactions": "",
                     "processors": "",

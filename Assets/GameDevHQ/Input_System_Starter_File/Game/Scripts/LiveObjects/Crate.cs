@@ -15,9 +15,40 @@ namespace Game.Scripts.LiveObjects
 
         private List<Rigidbody> _brakeOff = new List<Rigidbody>();
 
+        public bool canShatter = false;
+
         private void OnEnable()
         {
             InteractableZone.onZoneInteractionComplete += InteractableZone_onZoneInteractionComplete;
+            InteractableZone.onHoldStarted += InteractableZone_onHoldStarted;
+            InteractableZone.onHoldEnded += InteractableZone_onHoldEnded;
+        }
+
+        private void InteractableZone_onHoldEnded(int zoneID)
+        {
+            //break multiple pieces
+            if(zoneID == 6 && canShatter == true)
+            {
+                canShatter = true;
+                if (_brakeOff.Count > 0)
+                {
+                    //for loop for breaking stuff. 
+                    for(int i = 0; i < _brakeOff.Count -1; i++)
+                    {
+                        BreakPart();
+                    }
+
+                    StartCoroutine(PunchDelay());
+                }
+            }
+        }
+
+        private void InteractableZone_onHoldStarted(int zoneID)
+        {
+            if(zoneID == 6 && _brakeOff.Count > 0)
+            {
+                canShatter = true;
+            }
         }
 
         private void InteractableZone_onZoneInteractionComplete(InteractableZone zone)
@@ -49,11 +80,8 @@ namespace Game.Scripts.LiveObjects
 
         private void Start()
         {
-            _brakeOff.AddRange(_pieces);
-            
+            _brakeOff.AddRange(_pieces);    
         }
-
-
 
         public void BreakPart()
         {
