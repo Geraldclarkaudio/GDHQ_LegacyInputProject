@@ -23,37 +23,43 @@ namespace Game.Scripts.LiveObjects
         public static event Action onHackComplete;
         public static event Action onHackEnded;
 
+        private GameInput _laptopInput;
+
         private void OnEnable()
         {
+            _laptopInput = new GameInput();
+            _laptopInput.Laptop.Enable();
+            _laptopInput.Laptop.ChangeCamera.performed += ChangeCamera_performed;
+            _laptopInput.Laptop.EndHack.performed += EndHack_performed;
             InteractableZone.onHoldStarted += InteractableZone_onHoldStarted;
             InteractableZone.onHoldEnded += InteractableZone_onHoldEnded;
         }
 
-        private void Update()
+        private void EndHack_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
         {
-            if (_hacked == true)
+            if(_hacked == true)
             {
-                if (Input.GetKeyDown(KeyCode.E))
-                {
-                    var previous = _activeCamera;
-                    _activeCamera++;
-
-
-                    if (_activeCamera >= _cameras.Length)
-                        _activeCamera = 0;
-
-
-                    _cameras[_activeCamera].Priority = 11;
-                    _cameras[previous].Priority = 9;
-                }
-
-                if (Input.GetKeyDown(KeyCode.Escape))
-                {
-                    _hacked = false;
-                    onHackEnded?.Invoke();
-                    ResetCameras();
-                }
+                _hacked = false;
+                onHackEnded?.Invoke();
+                ResetCameras();
             }
+        }
+
+        private void ChangeCamera_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
+        {
+            if(_hacked == true)
+            {
+                var previous = _activeCamera;
+                _activeCamera++;
+
+
+                if (_activeCamera >= _cameras.Length)
+                    _activeCamera = 0;
+
+
+                _cameras[_activeCamera].Priority = 11;
+                _cameras[previous].Priority = 9;
+            }  
         }
 
         void ResetCameras()
@@ -69,8 +75,8 @@ namespace Game.Scripts.LiveObjects
             if (zoneID == 3 && _hacked == false) //Hacking terminal
             {
                 _progressBar.gameObject.SetActive(true);
-                StartCoroutine(HackingRoutine());
-                onHackComplete?.Invoke();
+                StartCoroutine(HackingRoutine()); // starts coroutine
+                onHackComplete?.Invoke(); // release controls from player
             }
         }
 

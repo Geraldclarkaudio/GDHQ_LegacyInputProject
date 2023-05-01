@@ -23,9 +23,19 @@ namespace Game.Scripts.LiveObjects
         public static event Action onDriveModeEntered;
         public static event Action onDriveModeExited;
 
+        private GameInput _forliftInput;
+
         private void OnEnable()
         {
+            _forliftInput = new GameInput();
+            _forliftInput.Forklift.Enable();
+            _forliftInput.Forklift.Exit.performed += Exit_performed;
             InteractableZone.onZoneInteractionComplete += EnterDriveMode;
+        }
+
+        private void Exit_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
+        {
+            ExitDriveMode();   
         }
 
         private void EnterDriveMode(InteractableZone zone)
@@ -55,35 +65,45 @@ namespace Game.Scripts.LiveObjects
             {
                 LiftControls();
                 CalcutateMovement();
-                if (Input.GetKeyDown(KeyCode.Escape))
-                    ExitDriveMode();
             }
 
         }
 
         private void CalcutateMovement()
         {
-            float h = Input.GetAxisRaw("Horizontal");
-            float v = Input.GetAxisRaw("Vertical");
-            var direction = new Vector3(0, 0, v);
+            var drive = _forliftInput.Forklift.Drive.ReadValue<float>();
+            var rot = _forliftInput.Forklift.Rotate.ReadValue<float>();
+            var direction = new Vector3(0, 0, drive);
             var velocity = direction * _speed;
 
             transform.Translate(velocity * Time.deltaTime);
 
-            if (Mathf.Abs(v) > 0)
+            if (rot > 0)
             {
                 var tempRot = transform.rotation.eulerAngles;
-                tempRot.y += h * _speed / 2;
+                tempRot.y += drive * _speed / 2;
                 transform.rotation = Quaternion.Euler(tempRot);
             }
+            else if(rot < 0)
+            {
+                var tempRot = transform.rotation.eulerAngles;
+                tempRot.y -= drive * _speed / 2;
+                transform.rotation = Quaternion.Euler(tempRot);
+            }
+
         }
 
         private void LiftControls()
         {
-            if (Input.GetKey(KeyCode.R))
+            var lift = _forliftInput.Forklift.Lift.ReadValue<float>();
+            if(lift > 0)
+            {
                 LiftUpRoutine();
-            else if (Input.GetKey(KeyCode.T))
+            }
+            else if(lift < 0)
+            {
                 LiftDownRoutine();
+            }
         }
 
         private void LiftUpRoutine()

@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Game.Scripts.UI;
-
+using Game.Scripts.Player;
 
 namespace Game.Scripts.LiveObjects
 {
@@ -21,7 +21,6 @@ namespace Game.Scripts.LiveObjects
             Press,
             PressHold
         }
-
         [SerializeField]
         private ZoneType _zoneType;
         [SerializeField]
@@ -45,6 +44,8 @@ namespace Game.Scripts.LiveObjects
         [SerializeField]
         private GameObject _marker;
 
+        private Game.Scripts.Player.Player player;
+        
         private bool _inHoldState = false;
 
         private static int _currentZoneID = 0;
@@ -66,10 +67,13 @@ namespace Game.Scripts.LiveObjects
         public static event Action<int> onHoldStarted;
         public static event Action<int> onHoldEnded;
 
+        private void Start()
+        {
+            player = GameObject.FindObjectOfType<Player.Player>();
+        }
         private void OnEnable()
         {
             InteractableZone.onZoneInteractionComplete += SetMarker;
-
         }
 
         private void OnTriggerEnter(Collider other)
@@ -82,6 +86,7 @@ namespace Game.Scripts.LiveObjects
                         if (_itemsCollected == false)
                         {
                             _inZone = true;
+                            player.interactableZone = this;
                             if (_displayMessage != null)
                             {
                                 string message = $"Press the {_zoneKeyInput.ToString()} key to {_displayMessage}.";
@@ -96,6 +101,7 @@ namespace Game.Scripts.LiveObjects
                         if (_actionPerformed == false)
                         {
                             _inZone = true;
+                            player.interactableZone = this;
                             if (_displayMessage != null)
                             {
                                 string message = $"Press the {_zoneKeyInput.ToString()} key to {_displayMessage}.";
@@ -108,6 +114,7 @@ namespace Game.Scripts.LiveObjects
 
                     case ZoneType.HoldAction:
                         _inZone = true;
+                        player.interactableZone = this;
                         if (_displayMessage != null)
                         {
                             string message = $"Press the {_zoneKeyInput.ToString()} key to {_displayMessage}.";
@@ -119,15 +126,58 @@ namespace Game.Scripts.LiveObjects
                 }
             }
         }
-
+     
         private void Update()
         {
             if (_inZone == true)
             {
+                #region Old Inputs
+                //if (Input.GetKeyDown(_zoneKeyInput) && _keyState != KeyState.PressHold)
+                //{
+                //    //press
+                //    switch (_zoneType)
+                //    {
+                //        case ZoneType.Collectable:
+                //            if (_itemsCollected == false)
+                //            {
+                //                CollectItems();
+                //                _itemsCollected = true;
+                //                UIManager.Instance.DisplayInteractableZoneMessage(false);
+                //            }
+                //            break;
 
-                if (Input.GetKeyDown(_zoneKeyInput) && _keyState != KeyState.PressHold)
+                //        case ZoneType.Action:
+                //            if (_actionPerformed == false)
+                //            {
+                //                PerformAction();
+                //                _actionPerformed = true;
+                //                UIManager.Instance.DisplayInteractableZoneMessage(false);
+                //            }
+                //            break;
+                //    }
+                //}
+                //else if (Input.GetKey(_zoneKeyInput) && _keyState == KeyState.PressHold && _inHoldState == false)
+                //{
+                //    _inHoldState = true;
+
+
+
+                //    switch (_zoneType)
+                //    {                      
+                //        case ZoneType.HoldAction:
+                //            PerformHoldAction();
+                //            break;           
+                //    }
+                //}
+
+                //if (Input.GetKeyUp(_zoneKeyInput) && _keyState == KeyState.PressHold)
+                //{
+                //    _inHoldState = false;
+                //    onHoldEnded?.Invoke(_zoneID);
+                //}
+                #endregion
+                if (player._interactPress == true)
                 {
-                    //press
                     switch (_zoneType)
                     {
                         case ZoneType.Collectable:
@@ -135,44 +185,53 @@ namespace Game.Scripts.LiveObjects
                             {
                                 CollectItems();
                                 _itemsCollected = true;
+                                player._interactPress = false;
+                                player._interactHold = false;
                                 UIManager.Instance.DisplayInteractableZoneMessage(false);
                             }
                             break;
-
                         case ZoneType.Action:
                             if (_actionPerformed == false)
                             {
                                 PerformAction();
                                 _actionPerformed = true;
+                                player._interactPress = false;
+                                player._interactHold = false;
                                 UIManager.Instance.DisplayInteractableZoneMessage(false);
+                            }
+                            break;
+                        case ZoneType.HoldAction:
+                            player._interactPress = false;
+                            player._interactHold = false;
+                            break;
+                    }
+                }
+                if(player._interactHold == true)
+                {
+                    switch(_zoneType)
+                    {
+                        case ZoneType.HoldAction:
+                            player._interactHold = false;
+                            PerformHoldAction();
+                            break;
+                        case ZoneType.Collectable:
+                            if (_itemsCollected == false)
+                            {
+                                player._interactPress = false;
+                                player._interactHold = false;
+                            }
+                            break;
+                        case ZoneType.Action:
+                            if (_actionPerformed == false)
+                            {
+                                player._interactPress = false;
+                                player._interactHold = false;
                             }
                             break;
                     }
                 }
-                else if (Input.GetKey(_zoneKeyInput) && _keyState == KeyState.PressHold && _inHoldState == false)
-                {
-                    _inHoldState = true;
-
-                   
-
-                    switch (_zoneType)
-                    {                      
-                        case ZoneType.HoldAction:
-                            PerformHoldAction();
-                            break;           
-                    }
-                }
-
-                if (Input.GetKeyUp(_zoneKeyInput) && _keyState == KeyState.PressHold)
-                {
-                    _inHoldState = false;
-                    onHoldEnded?.Invoke(_zoneID);
-                }
-
-               
             }
         }
-       
         private void CollectItems()
         {
             foreach (var item in _zoneItems)
@@ -245,6 +304,7 @@ namespace Game.Scripts.LiveObjects
             if (other.CompareTag("Player"))
             {
                 _inZone = false;
+                player.interactableZone = null;
                 UIManager.Instance.DisplayInteractableZoneMessage(false);
             }
         }

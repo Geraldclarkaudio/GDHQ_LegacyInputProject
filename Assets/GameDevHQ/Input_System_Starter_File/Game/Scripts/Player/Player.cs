@@ -25,6 +25,11 @@ namespace Game.Scripts.Player
 
         private GameInput _input;
 
+        public InteractableZone interactableZone;
+        public bool interacted;
+        public bool _interactPress;
+        public bool _interactHold;
+
         private void OnEnable()
         {
             InteractableZone.onZoneInteractionComplete += InteractableZone_onZoneInteractionComplete;
@@ -40,7 +45,39 @@ namespace Game.Scripts.Player
         private void Start()
         {
             _input = new GameInput();
-            _input.Player.Enable();
+            _input.Player.Enable(); // enable Player Input Map on start
+           
+            _input.Player.Interact.performed +=
+                ctx =>
+                {
+                    if (ctx.interaction is UnityEngine.InputSystem.Interactions.HoldInteraction)
+                    {
+                        Debug.Log("HOLDING");
+                        if(interactableZone != null)
+                        {
+                            _interactHold = true;
+                            InteractableZone_onZoneInteractionComplete(interactableZone);
+                        }
+                        else
+                        {
+                            return;
+                        }
+                    }
+                    else
+                    {
+                        Debug.Log("PRESS");
+                        if (interactableZone != null)
+                        {
+                            _interactPress = true;
+                            InteractableZone_onZoneInteractionComplete(interactableZone);
+                        }
+                        else
+                        {
+                            return;
+                        }
+                    }
+                };
+
 
             _controller = GetComponent<CharacterController>();
 
@@ -57,7 +94,6 @@ namespace Game.Scripts.Player
         {
             if (_canMove == true)
                 CalcutateMovement();
-
         }
 
         private void CalcutateMovement()
@@ -97,6 +133,7 @@ namespace Game.Scripts.Player
         {
             _canMove = false;
             _followCam.Priority = 9;
+            _input.Player.Enable();
         }
 
         private void ReturnPlayerControl()
@@ -104,6 +141,7 @@ namespace Game.Scripts.Player
             _model.SetActive(true);
             _canMove = true;
             _followCam.Priority = 10;
+            _input.Player.Enable();
         }
 
         private void HidePlayer()

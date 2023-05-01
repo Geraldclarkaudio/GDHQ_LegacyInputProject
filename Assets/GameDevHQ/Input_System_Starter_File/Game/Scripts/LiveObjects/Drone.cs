@@ -30,9 +30,23 @@ namespace Game.Scripts.LiveObjects
         public static event Action OnEnterFlightMode;
         public static event Action onExitFlightmode;
 
+        private GameInput _droneInput;
+        private bool _tilting = false;
+
         private void OnEnable()
         {
+            _droneInput = new GameInput();
+            _droneInput.Drone.Enable();
+            _droneInput.Drone.ExitFlight.performed += ExitFlight_performed;
+
             InteractableZone.onZoneInteractionComplete += EnterFlightMode;
+        }
+
+        private void ExitFlight_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
+        {
+            _inFlightMode = false;
+            onExitFlightmode?.Invoke();
+            ExitFlightMode();
         }
 
         private void EnterFlightMode(InteractableZone zone)
@@ -61,13 +75,14 @@ namespace Game.Scripts.LiveObjects
             {
                 CalculateTilt();
                 CalculateMovementUpdate();
-
-                if (Input.GetKeyDown(KeyCode.Escape))
-                {
-                    _inFlightMode = false;
-                    onExitFlightmode?.Invoke();
-                    ExitFlightMode();
-                }
+                #region Old Input
+                //if (Input.GetKeyDown(KeyCode.Escape))
+                //{
+                //    _inFlightMode = false;
+                //    onExitFlightmode?.Invoke();
+                //    ExitFlightMode();
+                //}
+                #endregion
             }
         }
 
@@ -78,47 +93,77 @@ namespace Game.Scripts.LiveObjects
                 CalculateMovementFixedUpdate();
         }
 
-        private void CalculateMovementUpdate()
+        private void CalculateMovementUpdate() // NEW
         {
-            if (Input.GetKey(KeyCode.LeftArrow))
+            var rot = _droneInput.Drone.Rotate.ReadValue<float>();
+            var rotation = transform.localRotation.eulerAngles; 
+
+            if(rot < 0)
             {
-                var tempRot = transform.localRotation.eulerAngles;
-                tempRot.y -= _speed / 3;
-                transform.localRotation = Quaternion.Euler(tempRot);
+                rotation.y -= _speed / 3;
+                transform.localRotation = Quaternion.Euler(rotation);
             }
-            if (Input.GetKey(KeyCode.RightArrow))
+            else if(rot > 0)
             {
-                var tempRot = transform.localRotation.eulerAngles;
-                tempRot.y += _speed / 3;
-                transform.localRotation = Quaternion.Euler(tempRot);
+                rotation.y += _speed / 3;
+                transform.localRotation = Quaternion.Euler(rotation);
             }
+
+            #region Old Input
+            //if (Input.GetKey(KeyCode.LeftArrow))
+            //{
+            //    var tempRot = transform.localRotation.eulerAngles;
+            //    tempRot.y -= _speed / 3;
+            //    transform.localRotation = Quaternion.Euler(tempRot);
+            //}
+            //if (Input.GetKey(KeyCode.RightArrow))
+            //{
+            //    var tempRot = transform.localRotation.eulerAngles;
+            //    tempRot.y += _speed / 3;
+            //    transform.localRotation = Quaternion.Euler(tempRot);
+            //}
+            #endregion
         }
 
-        private void CalculateMovementFixedUpdate()
+        private void CalculateMovementFixedUpdate() // NEW
         {
-            
-            if (Input.GetKey(KeyCode.Space))
+            var direction = _droneInput.Drone.Acceleration.ReadValue<float>();
+            if(direction > 0)
             {
                 _rigidbody.AddForce(transform.up * _speed, ForceMode.Acceleration);
             }
-            if (Input.GetKey(KeyCode.V))
+            else if(direction < 0)
             {
                 _rigidbody.AddForce(-transform.up * _speed, ForceMode.Acceleration);
             }
+            #region OLD INPUT
+            //if (Input.GetKey(KeyCode.Space))
+            //{
+            //    _rigidbody.AddForce(transform.up * _speed, ForceMode.Acceleration);
+            //}
+            //if (Input.GetKey(KeyCode.V))
+            //{
+            //    _rigidbody.AddForce(-transform.up * _speed, ForceMode.Acceleration);
+            //}
+            #endregion
         }
 
-        private void CalculateTilt()
+        private void CalculateTilt() //NEW 
         {
-            if (Input.GetKey(KeyCode.A)) 
-                transform.rotation = Quaternion.Euler(00, transform.localRotation.eulerAngles.y, 30);
-            else if (Input.GetKey(KeyCode.D))
-                transform.rotation = Quaternion.Euler(0, transform.localRotation.eulerAngles.y, -30);
-            else if (Input.GetKey(KeyCode.W))
-                transform.rotation = Quaternion.Euler(30, transform.localRotation.eulerAngles.y, 0);
-            else if (Input.GetKey(KeyCode.S))
-                transform.rotation = Quaternion.Euler(-30, transform.localRotation.eulerAngles.y, 0);
-            else 
-                transform.rotation = Quaternion.Euler(0, transform.localRotation.eulerAngles.y, 0);
+            var tilt = _droneInput.Drone.Tilt.ReadValue<Vector2>();
+            transform.rotation = Quaternion.Euler(tilt.y * 30, transform.localRotation.eulerAngles.y, -tilt.x * 30);
+            #region OLD INPUT
+            //if (Input.GetKey(KeyCode.A)) 
+            //    transform.rotation = Quaternion.Euler(00, transform.localRotation.eulerAngles.y, 30);
+            //else if (Input.GetKey(KeyCode.D))
+            //    transform.rotation = Quaternion.Euler(0, transform.localRotation.eulerAngles.y, -30);
+            //else if (Input.GetKey(KeyCode.W))
+            //    transform.rotation = Quaternion.Euler(30, transform.localRotation.eulerAngles.y, 0);
+            //else if (Input.GetKey(KeyCode.S))
+            //    transform.rotation = Quaternion.Euler(-30, transform.localRotation.eulerAngles.y, 0);
+            //else 
+            //    transform.rotation = Quaternion.Euler(0, transform.localRotation.eulerAngles.y, 0);
+            #endregion
         }
 
         private void OnDisable()
