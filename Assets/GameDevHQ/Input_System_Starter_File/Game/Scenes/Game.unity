@@ -2014,6 +2014,7 @@ MonoBehaviour:
   - {fileID: 547960046}
   _crateCollider: {fileID: 147778362}
   _interactableZone: {fileID: 197238855}
+  _numberToBreak: 2
   canShatter: 0
 --- !u!65 &147778362
 BoxCollider:
@@ -2827,7 +2828,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5098578218743658244, guid: 1d553f90302742946bbf45996165949c, type: 3}
       propertyPath: m_Size.z
-      value: 1.9456621
+      value: 2.3485792
       objectReference: {fileID: 0}
     - target: {fileID: 5098578218743658244, guid: 1d553f90302742946bbf45996165949c, type: 3}
       propertyPath: m_Center.x
@@ -2839,7 +2840,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5098578218743658244, guid: 1d553f90302742946bbf45996165949c, type: 3}
       propertyPath: m_Center.z
-      value: 3.3907206
+      value: 3.592179
       objectReference: {fileID: 0}
     - target: {fileID: 5779097134961922744, guid: 1d553f90302742946bbf45996165949c, type: 3}
       propertyPath: m_RootOrder
@@ -11468,7 +11469,7 @@ Light:
   m_BounceIntensity: 1
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 1.02e-43, y: 0, z: 0, w: -3.1261653e-18}
+  m_BoundingSphereOverride: {x: 7.7159966e+31, y: 9.5961304e+11, z: 7.6813502e+31, w: 14300.599}
   m_UseBoundingSphereOverride: 0
   m_UseViewFrustumForShadowCasterCull: 1
   m_ShadowRadius: 0

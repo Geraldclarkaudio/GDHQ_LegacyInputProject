@@ -12,7 +12,8 @@ namespace Game.Scripts.LiveObjects
         [SerializeField] private BoxCollider _crateCollider;
         [SerializeField] private InteractableZone _interactableZone;
         private bool _isReadyToBreak = false;
-
+        [SerializeField]
+        private int _numberToBreak;
         private List<Rigidbody> _brakeOff = new List<Rigidbody>();
 
         public bool canShatter = false;
@@ -32,8 +33,9 @@ namespace Game.Scripts.LiveObjects
                 canShatter = true;
                 if (_brakeOff.Count > 0)
                 {
-                    //for loop for breaking stuff. 
-                    for(int i = 0; i < _brakeOff.Count -1; i++)
+                    _numberToBreak = 2;
+
+                    for(int i = 0; i < _numberToBreak; i++)
                     {
                         BreakPart();
                     }
@@ -53,7 +55,6 @@ namespace Game.Scripts.LiveObjects
 
         private void InteractableZone_onZoneInteractionComplete(InteractableZone zone)
         {
-            
             if (_isReadyToBreak == false && _brakeOff.Count >0)
             {
                 _wholeCrate.SetActive(false);
@@ -88,7 +89,7 @@ namespace Game.Scripts.LiveObjects
             int rng = Random.Range(0, _brakeOff.Count);
             _brakeOff[rng].constraints = RigidbodyConstraints.None;
             _brakeOff[rng].AddForce(new Vector3(1f, 1f, 1f), ForceMode.Force);
-            _brakeOff.Remove(_brakeOff[rng]);            
+            _brakeOff.Remove(_brakeOff[rng]);
         }
 
         IEnumerator PunchDelay()
