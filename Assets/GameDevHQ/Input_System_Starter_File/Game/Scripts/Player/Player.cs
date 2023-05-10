@@ -23,7 +23,15 @@ namespace Game.Scripts.Player
         [SerializeField]
         private GameObject _model;
 
-        private GameInput _input; 
+        private InteractableZone _interactableZone;
+
+        private GameInput _input;
+
+        public delegate void PressInteract();
+        public static event PressInteract onPressInteract;
+
+        public delegate void HoldInteract();
+        public static event HoldInteract onHoldInteract;
 
         private void OnEnable()
         {
@@ -48,9 +56,30 @@ namespace Game.Scripts.Player
 
             if (_anim == null)
                 Debug.Log("Failed to connect the Animator");
+            _interactableZone = GameObject.FindObjectOfType<InteractableZone>();
 
             _input = new GameInput();
             _input.Player.Enable();
+            _input.Player.Interact.performed += Interacted;
+        }
+
+        public void Interacted(InputAction.CallbackContext context)
+        {
+            if(context.interaction is UnityEngine.InputSystem.Interactions.PressInteraction)
+            {
+                if (onPressInteract != null)
+                {
+                    onPressInteract();
+                }
+            }
+            else if(context.interaction is UnityEngine.InputSystem.Interactions.HoldInteraction)
+            {
+                if(onHoldInteract != null)
+                {
+                    onHoldInteract();
+                }
+            }
+
         }
 
         private void Update()
