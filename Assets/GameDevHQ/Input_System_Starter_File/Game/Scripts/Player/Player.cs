@@ -86,7 +86,6 @@ namespace Game.Scripts.Player
         {
             if (_canMove == true)
                 CalcutateMovement();
-
         }
 
         private void CalcutateMovement()
