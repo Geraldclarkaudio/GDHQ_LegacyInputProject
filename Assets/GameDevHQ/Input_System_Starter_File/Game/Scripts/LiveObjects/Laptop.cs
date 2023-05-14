@@ -23,37 +23,41 @@ namespace Game.Scripts.LiveObjects
         public static event Action onHackComplete;
         public static event Action onHackEnded;
 
+        private GameInput _input;
+        
         private void OnEnable()
         {
+            _input = new GameInput();
+            _input.Laptop.Enable();
+
+            _input.Laptop.SwitchCamera.performed += SwitchCamera_performed;
+            _input.Laptop.LeaveCamera.performed += LeaveCamera_performed;
             InteractableZone.onHoldStarted += InteractableZone_onHoldStarted;
             InteractableZone.onHoldEnded += InteractableZone_onHoldEnded;
         }
 
-        private void Update()
+        private void SwitchCamera_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
         {
             if (_hacked == true)
             {
-                if (Input.GetKeyDown(KeyCode.E))
-                {
-                    var previous = _activeCamera;
-                    _activeCamera++;
+                var previous = _activeCamera;
+                _activeCamera++;
 
 
-                    if (_activeCamera >= _cameras.Length)
-                        _activeCamera = 0;
+                if (_activeCamera >= _cameras.Length)
+                    _activeCamera = 0;
 
 
-                    _cameras[_activeCamera].Priority = 11;
-                    _cameras[previous].Priority = 9;
-                }
-
-                if (Input.GetKeyDown(KeyCode.Escape))
-                {
-                    _hacked = false;
-                    onHackEnded?.Invoke();
-                    ResetCameras();
-                }
+                _cameras[_activeCamera].Priority = 11;
+                _cameras[previous].Priority = 9;
             }
+        }
+
+        private void LeaveCamera_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
+        {
+            _hacked = false;
+            onHackEnded?.Invoke();
+            ResetCameras();
         }
 
         void ResetCameras()

@@ -550,6 +550,230 @@ public partial class @GameInput : IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""Laptop"",
+            ""id"": ""b98c5f64-ec5d-487a-971c-e2b0b1189120"",
+            ""actions"": [
+                {
+                    ""name"": ""SwitchCamera"",
+                    ""type"": ""Button"",
+                    ""id"": ""d4adee2b-9238-4fef-8fab-9f2ad5b99fef"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""LeaveCamera"",
+                    ""type"": ""Button"",
+                    ""id"": ""e9b01117-a14e-44ab-9982-99dda36bb14d"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""6e7dd252-877f-4c02-a2f9-c28f18de1f21"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SwitchCamera"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""45cf968a-b576-41c0-901a-cce32e419614"",
+                    ""path"": ""<Gamepad>/buttonWest"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SwitchCamera"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""4eaacbdb-9a12-41dd-abe5-7a6858e9b4d0"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""LeaveCamera"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""23a61d7c-ca7b-4e2b-baf5-2502c7214edd"",
+                    ""path"": ""<Gamepad>/buttonEast"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""LeaveCamera"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
+        },
+        {
+            ""name"": ""Forklift"",
+            ""id"": ""246dde19-26a6-436d-aa66-1075da70a7d9"",
+            ""actions"": [
+                {
+                    ""name"": ""Drive"",
+                    ""type"": ""Button"",
+                    ""id"": ""424df3d8-a7ba-4eb0-aeb7-a7a872626e26"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Turn"",
+                    ""type"": ""Button"",
+                    ""id"": ""f607aa54-321c-4d08-9250-06df726d7824"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Lift"",
+                    ""type"": ""Value"",
+                    ""id"": ""35587071-b159-4dca-867f-2e95beb0abf8"",
+                    ""expectedControlType"": ""Axis"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Leave"",
+                    ""type"": ""Button"",
+                    ""id"": ""4519cfb5-1d7a-429d-b64c-08c6a5d9050c"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""f9be5dda-a66d-4f33-b05e-5278c7f4424e"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Leave"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""Keyboard"",
+                    ""id"": ""c7317f4e-7d3d-491e-a6e2-e7e0feafb17f"",
+                    ""path"": ""1DAxis"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Lift"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""negative"",
+                    ""id"": ""13805358-2cdf-4052-a55c-669e0df4c8a4"",
+                    ""path"": ""<Keyboard>/f"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Lift"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""positive"",
+                    ""id"": ""b4716f8e-aba6-495a-9bce-8dbbbd5d87a5"",
+                    ""path"": ""<Keyboard>/r"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Lift"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""Keyboard"",
+                    ""id"": ""9c021b57-8210-4fc5-a111-3188d7507c91"",
+                    ""path"": ""1DAxis"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Turn"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""negative"",
+                    ""id"": ""b37deb23-9f96-4e9f-a6f9-3b41971cbc33"",
+                    ""path"": ""<Keyboard>/leftArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Turn"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""positive"",
+                    ""id"": ""422266a1-8761-4fa0-a9d1-cddc47d7ba7d"",
+                    ""path"": ""<Keyboard>/rightArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Turn"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""Keyboard"",
+                    ""id"": ""589100ab-d402-4a4f-a07e-0e73a84130db"",
+                    ""path"": ""1DAxis"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Drive"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""negative"",
+                    ""id"": ""1e184efa-e78f-487b-a009-97574e7a6565"",
+                    ""path"": ""<Keyboard>/s"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Drive"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""positive"",
+                    ""id"": ""b4959957-1526-471b-8664-f6d64db4a6d3"",
+                    ""path"": ""<Keyboard>/w"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Drive"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                }
+            ]
         }
     ],
     ""controlSchemes"": []
@@ -566,6 +790,16 @@ public partial class @GameInput : IInputActionCollection2, IDisposable
         m_Drone_Turn = m_Drone.FindAction("Turn", throwIfNotFound: true);
         m_Drone_Height = m_Drone.FindAction("Height", throwIfNotFound: true);
         m_Drone_EscapeFlight = m_Drone.FindAction("EscapeFlight", throwIfNotFound: true);
+        // Laptop
+        m_Laptop = asset.FindActionMap("Laptop", throwIfNotFound: true);
+        m_Laptop_SwitchCamera = m_Laptop.FindAction("SwitchCamera", throwIfNotFound: true);
+        m_Laptop_LeaveCamera = m_Laptop.FindAction("LeaveCamera", throwIfNotFound: true);
+        // Forklift
+        m_Forklift = asset.FindActionMap("Forklift", throwIfNotFound: true);
+        m_Forklift_Drive = m_Forklift.FindAction("Drive", throwIfNotFound: true);
+        m_Forklift_Turn = m_Forklift.FindAction("Turn", throwIfNotFound: true);
+        m_Forklift_Lift = m_Forklift.FindAction("Lift", throwIfNotFound: true);
+        m_Forklift_Leave = m_Forklift.FindAction("Leave", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -735,6 +969,104 @@ public partial class @GameInput : IInputActionCollection2, IDisposable
         }
     }
     public DroneActions @Drone => new DroneActions(this);
+
+    // Laptop
+    private readonly InputActionMap m_Laptop;
+    private ILaptopActions m_LaptopActionsCallbackInterface;
+    private readonly InputAction m_Laptop_SwitchCamera;
+    private readonly InputAction m_Laptop_LeaveCamera;
+    public struct LaptopActions
+    {
+        private @GameInput m_Wrapper;
+        public LaptopActions(@GameInput wrapper) { m_Wrapper = wrapper; }
+        public InputAction @SwitchCamera => m_Wrapper.m_Laptop_SwitchCamera;
+        public InputAction @LeaveCamera => m_Wrapper.m_Laptop_LeaveCamera;
+        public InputActionMap Get() { return m_Wrapper.m_Laptop; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(LaptopActions set) { return set.Get(); }
+        public void SetCallbacks(ILaptopActions instance)
+        {
+            if (m_Wrapper.m_LaptopActionsCallbackInterface != null)
+            {
+                @SwitchCamera.started -= m_Wrapper.m_LaptopActionsCallbackInterface.OnSwitchCamera;
+                @SwitchCamera.performed -= m_Wrapper.m_LaptopActionsCallbackInterface.OnSwitchCamera;
+                @SwitchCamera.canceled -= m_Wrapper.m_LaptopActionsCallbackInterface.OnSwitchCamera;
+                @LeaveCamera.started -= m_Wrapper.m_LaptopActionsCallbackInterface.OnLeaveCamera;
+                @LeaveCamera.performed -= m_Wrapper.m_LaptopActionsCallbackInterface.OnLeaveCamera;
+                @LeaveCamera.canceled -= m_Wrapper.m_LaptopActionsCallbackInterface.OnLeaveCamera;
+            }
+            m_Wrapper.m_LaptopActionsCallbackInterface = instance;
+            if (instance != null)
+            {
+                @SwitchCamera.started += instance.OnSwitchCamera;
+                @SwitchCamera.performed += instance.OnSwitchCamera;
+                @SwitchCamera.canceled += instance.OnSwitchCamera;
+                @LeaveCamera.started += instance.OnLeaveCamera;
+                @LeaveCamera.performed += instance.OnLeaveCamera;
+                @LeaveCamera.canceled += instance.OnLeaveCamera;
+            }
+        }
+    }
+    public LaptopActions @Laptop => new LaptopActions(this);
+
+    // Forklift
+    private readonly InputActionMap m_Forklift;
+    private IForkliftActions m_ForkliftActionsCallbackInterface;
+    private readonly InputAction m_Forklift_Drive;
+    private readonly InputAction m_Forklift_Turn;
+    private readonly InputAction m_Forklift_Lift;
+    private readonly InputAction m_Forklift_Leave;
+    public struct ForkliftActions
+    {
+        private @GameInput m_Wrapper;
+        public ForkliftActions(@GameInput wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Drive => m_Wrapper.m_Forklift_Drive;
+        public InputAction @Turn => m_Wrapper.m_Forklift_Turn;
+        public InputAction @Lift => m_Wrapper.m_Forklift_Lift;
+        public InputAction @Leave => m_Wrapper.m_Forklift_Leave;
+        public InputActionMap Get() { return m_Wrapper.m_Forklift; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(ForkliftActions set) { return set.Get(); }
+        public void SetCallbacks(IForkliftActions instance)
+        {
+            if (m_Wrapper.m_ForkliftActionsCallbackInterface != null)
+            {
+                @Drive.started -= m_Wrapper.m_ForkliftActionsCallbackInterface.OnDrive;
+                @Drive.performed -= m_Wrapper.m_ForkliftActionsCallbackInterface.OnDrive;
+                @Drive.canceled -= m_Wrapper.m_ForkliftActionsCallbackInterface.OnDrive;
+                @Turn.started -= m_Wrapper.m_ForkliftActionsCallbackInterface.OnTurn;
+                @Turn.performed -= m_Wrapper.m_ForkliftActionsCallbackInterface.OnTurn;
+                @Turn.canceled -= m_Wrapper.m_ForkliftActionsCallbackInterface.OnTurn;
+                @Lift.started -= m_Wrapper.m_ForkliftActionsCallbackInterface.OnLift;
+                @Lift.performed -= m_Wrapper.m_ForkliftActionsCallbackInterface.OnLift;
+                @Lift.canceled -= m_Wrapper.m_ForkliftActionsCallbackInterface.OnLift;
+                @Leave.started -= m_Wrapper.m_ForkliftActionsCallbackInterface.OnLeave;
+                @Leave.performed -= m_Wrapper.m_ForkliftActionsCallbackInterface.OnLeave;
+                @Leave.canceled -= m_Wrapper.m_ForkliftActionsCallbackInterface.OnLeave;
+            }
+            m_Wrapper.m_ForkliftActionsCallbackInterface = instance;
+            if (instance != null)
+            {
+                @Drive.started += instance.OnDrive;
+                @Drive.performed += instance.OnDrive;
+                @Drive.canceled += instance.OnDrive;
+                @Turn.started += instance.OnTurn;
+                @Turn.performed += instance.OnTurn;
+                @Turn.canceled += instance.OnTurn;
+                @Lift.started += instance.OnLift;
+                @Lift.performed += instance.OnLift;
+                @Lift.canceled += instance.OnLift;
+                @Leave.started += instance.OnLeave;
+                @Leave.performed += instance.OnLeave;
+                @Leave.canceled += instance.OnLeave;
+            }
+        }
+    }
+    public ForkliftActions @Forklift => new ForkliftActions(this);
     public interface IPlayerActions
     {
         void OnMovement(InputAction.CallbackContext context);
@@ -748,5 +1080,17 @@ public partial class @GameInput : IInputActionCollection2, IDisposable
         void OnTurn(InputAction.CallbackContext context);
         void OnHeight(InputAction.CallbackContext context);
         void OnEscapeFlight(InputAction.CallbackContext context);
+    }
+    public interface ILaptopActions
+    {
+        void OnSwitchCamera(InputAction.CallbackContext context);
+        void OnLeaveCamera(InputAction.CallbackContext context);
+    }
+    public interface IForkliftActions
+    {
+        void OnDrive(InputAction.CallbackContext context);
+        void OnTurn(InputAction.CallbackContext context);
+        void OnLift(InputAction.CallbackContext context);
+        void OnLeave(InputAction.CallbackContext context);
     }
 }
