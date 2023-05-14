@@ -33,6 +33,10 @@ namespace Game.Scripts.Player
         public delegate void HoldInteract();
         public static event HoldInteract onHoldInteract;
 
+        public bool _holdStop;
+        public bool _interactHold;
+        public bool _interactPress;
+
         private void OnEnable()
         {
             InteractableZone.onZoneInteractionComplete += InteractableZone_onZoneInteractionComplete;
@@ -79,7 +83,6 @@ namespace Game.Scripts.Player
                     onHoldInteract();
                 }
             }
-
         }
 
         private void Update()

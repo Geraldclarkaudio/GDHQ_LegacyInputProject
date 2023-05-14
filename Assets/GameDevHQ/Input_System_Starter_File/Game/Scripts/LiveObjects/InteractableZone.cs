@@ -66,8 +66,13 @@ namespace Game.Scripts.LiveObjects
         public static event Action<int> onHoldStarted;
         public static event Action<int> onHoldEnded;
 
+        public static event Action<int> onHold;
+
+        private Player.Player player;
+
         private void Start()
         {
+            player = GameObject.FindObjectOfType<Player.Player>();
             Player.Player.onPressInteract += PressInteraction;
             Player.Player.onHoldInteract += HoldInteraction;
         }
@@ -110,7 +115,7 @@ namespace Game.Scripts.LiveObjects
             {
                 return;
             }
-            else if(_inZone == true)
+            else if (_inZone == true)
             {
                 _inHoldState = true;
 
@@ -119,6 +124,9 @@ namespace Game.Scripts.LiveObjects
                     case ZoneType.HoldAction:
                         PerformHoldAction();
                         break;
+                    case ZoneType.Action:
+                        CrateHold();
+                        break;
                 }
             }
         }
@@ -126,7 +134,6 @@ namespace Game.Scripts.LiveObjects
         private void OnEnable()
         {
             InteractableZone.onZoneInteractionComplete += SetMarker;
-
         }
 
         private void OnTriggerEnter(Collider other)
@@ -176,59 +183,6 @@ namespace Game.Scripts.LiveObjects
                 }
             }
         }
-
-        //private void Update()
-        //{
-            //if (_inZone == true)
-            //{
-
-            //    if (Input.GetKeyDown(_zoneKeyInput) && _keyState != KeyState.PressHold)
-            //    {
-            //        //press
-            //        switch (_zoneType)
-            //        {
-            //            case ZoneType.Collectable:
-            //                if (_itemsCollected == false)
-            //                {
-            //                    CollectItems();
-            //                    _itemsCollected = true;
-            //                    UIManager.Instance.DisplayInteractableZoneMessage(false);
-            //                }
-            //                break;
-
-            //            case ZoneType.Action:
-            //                if (_actionPerformed == false)
-            //                {
-            //                    PerformAction();
-            //                    _actionPerformed = true;
-            //                    UIManager.Instance.DisplayInteractableZoneMessage(false);
-            //                }
-            //                break;
-            //        }
-            //    }
-            //    else if (Input.GetKey(_zoneKeyInput) && _keyState == KeyState.PressHold && _inHoldState == false)
-            //    {
-            //        _inHoldState = true;
-
-                   
-
-            //        switch (_zoneType)
-            //        {                      
-            //            case ZoneType.HoldAction:
-            //                PerformHoldAction();
-            //                break;           
-            //        }
-            //    }
-
-            //    if (Input.GetKeyUp(_zoneKeyInput) && _keyState == KeyState.PressHold)
-            //    {
-            //        _inHoldState = false;
-            //        onHoldEnded?.Invoke(_zoneID);
-            //    }
-
-               
-            //}
-       // }
        
         private void CollectItems()
         {
@@ -262,6 +216,12 @@ namespace Game.Scripts.LiveObjects
         {
             UIManager.Instance.DisplayInteractableZoneMessage(false);
             onHoldStarted?.Invoke(_zoneID);
+            player._holdStop = false;
+        }
+        private void CrateHold()
+        {
+            onHold?.Invoke(_zoneID);
+            player._holdStop = false;
         }
 
         public GameObject[] GetItems()

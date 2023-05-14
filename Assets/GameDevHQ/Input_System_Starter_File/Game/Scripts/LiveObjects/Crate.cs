@@ -14,10 +14,34 @@ namespace Game.Scripts.LiveObjects
         private bool _isReadyToBreak = false;
 
         private List<Rigidbody> _brakeOff = new List<Rigidbody>();
+        [SerializeField]
+        private bool _canShatter;
+        private int _numberToBreak;
 
         private void OnEnable()
         {
             InteractableZone.onZoneInteractionComplete += InteractableZone_onZoneInteractionComplete;
+            InteractableZone.onHold += InteractableZone_onHold;
+        }
+
+        private void InteractableZone_onHold(int zoneID)
+        {
+            //break multiple pieces
+            if (zoneID == 6)
+            { 
+                if (_brakeOff.Count > 0)
+                {
+                    _numberToBreak = 2;
+
+                    for (int i = 0; i < _numberToBreak; i++)
+                    {
+                        BreakPart();
+                    }
+
+                    StartCoroutine(PunchDelay());
+                    _canShatter = false;
+                }
+            }
         }
 
         private void InteractableZone_onZoneInteractionComplete(InteractableZone zone)
@@ -49,11 +73,8 @@ namespace Game.Scripts.LiveObjects
 
         private void Start()
         {
-            _brakeOff.AddRange(_pieces);
-            
+            _brakeOff.AddRange(_pieces);    
         }
-
-
 
         public void BreakPart()
         {
